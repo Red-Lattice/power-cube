@@ -1,0 +1,34 @@
+[gd_scene load_steps=7 format=3 uid="uid://xfnqjo0a1mut"]
+
+[ext_resource type="Script" path="res://Characters/player.cs" id="1_7qlsf"]
+[ext_resource type="Texture2D" uid="uid://bg0nl6yansgrr" path="res://Assets/Textures/Powercube Character.png" id="1_nqkdf"]
+[ext_resource type="Texture2D" uid="uid://btfr661q0sxfu" path="res://Assets/Textures/Aura.png" id="3_nylca"]
+[ext_resource type="Script" path="res://Characters/AuraTrigger.cs" id="4_k7ufi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cr8kv"]
+size = Vector2(30, 30)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_c0qbp"]
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_7qlsf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_cr8kv")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_nqkdf")
+
+[node name="Aura" type="Sprite2D" parent="."]
+z_index = 10
+texture = ExtResource("3_nylca")
+
+[node name="Area2D" type="Area2D" parent="Aura"]
+script = ExtResource("4_k7ufi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Aura/Area2D"]
+scale = Vector2(13, 13)
+shape = SubResource("CircleShape2D_c0qbp")
+
+[connection signal="body_entered" from="Aura/Area2D" to="Aura/Area2D" method="_on_Area2D_body_entered"]
+[connection signal="body_exited" from="Aura/Area2D" to="Aura/Area2D" method="_on_Area2D_body_exit"]
